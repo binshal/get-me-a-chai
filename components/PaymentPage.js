@@ -107,15 +107,15 @@ const PaymentPage = ({ username }) => {
       <div className="cover w-full bg-red-50 relative">
         <img
           className="object-cover w-full h-[350]"
-          src="https://c10.patreonusercontent.com/4/patreon-media/p/campaign/4842667/452146dcfeb04f38853368f554aadde1/eyJ3IjoxOTIwLCJ3ZSI6MX0%3D/17.gif?token-time=1738627200&token-hash=9ELNdGxKi3Cy06RYQQPuTwrVfYJgf_TBjThU5A7wrSM%3D"
+          src={currentUser.coverpic}
           alt=""
         />
-        <div className="absolute -bottom-12 right-[46.5%] border-2 border-white rounded-full">
+        <div className="absolute -bottom-12 right-[46.5%] border-2 overflow-hidden border-white rounded-full size-32">
           <img
-            className="rounded-full"
+            className="rounded-full object-cover size-32"
             width={95}
             height={95}
-            src="https://c10.patreonusercontent.com/4/patreon-media/p/campaign/4842667/aa52624d1cef47ba91c357da4a7859cf/eyJoIjoxMDgwLCJ3IjoxMDgwfQ%3D%3D/4.gif?token-time=1739059200&token-hash=-0c3Y5Z4BdTFUd1sx8UvXdglqbr8nsWzbPYKizhlSpY%3D"
+            src={currentUser.profilepic}
             alt=""
           />
         </div>
@@ -132,27 +132,19 @@ const PaymentPage = ({ username }) => {
             {/* List of all supporters as a leaderboard */}
             <h2 className="text-2xl font-bold my-5">Supporters</h2>
             <ul className="mx-5 text-md">
-              <li className="my-4 flex gap-2 items-center">
-                <img width={33} src="avatar.gif" alt="user- avatar" />
-                <span>
-                  Shubam donated <span className="font-bold">$30</span> with a
-                  message "I support you"
-                </span>
-              </li>
-              <li className="my-4 flex gap-2 items-center">
-                <img width={33} src="avatar.gif" alt="user- avatar" />
-                <span>
-                  Shubam donated <span className="font-bold">$30</span> with a
-                  message "I support you"
-                </span>
-              </li>
-              <li className="my-4 flex gap-2 items-center">
-                <img width={33} src="avatar.gif" alt="user- avatar" />
-                <span>
-                  Shubam donated <span className="font-bold">$30</span> with a
-                  message "I support you"
-                </span>
-              </li>
+              {payments.length === 0 && <li>No payments yet</li>}
+              {payments.map((p, i) => {
+                return (
+                  <li key={i} className="my-4 flex gap-2 items-center">
+                    <img width={33} src="avatar.gif" alt="user- avatar" />
+                    <span>
+                      {p.name} donated{" "}
+                      <span className="font-bold">₹{p.amount}</span> with a
+                      message "{p.message}"
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -185,7 +177,11 @@ const PaymentPage = ({ username }) => {
                 className="w-full p-3 rounded-lg bg-slate-800"
                 placeholder="Enter Amount"
               />
-              <button className=" text-white bg-gradient-to-br from-[brown] to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2">
+              <button
+                onClick={() => pay(Number.parseInt(paymentform.amount) * 100)}
+                className="disabled:bg-slate-600 disabled:from-purple-100 text-white bg-gradient-to-br from-[brown] to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2"
+              disabled={paymentform.name?.length < 3 || paymentform.message?.length < 4}
+              >
                 Pay
               </button>
             </div>
