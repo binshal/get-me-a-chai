@@ -122,9 +122,9 @@ const PaymentPage = ({ username }) => {
       </div>
       <div className="info flex justify-center items-center my-14 flex-col gap-2 mb-32">
         <div className="font-bold text-lg">@{username}</div>
-        <div className="text-slate-400">Creating Animated art for VTT's</div>
+        <div className="text-slate-400">let's help {username} to get a Chai</div>
         <div className="text-slate-400">
-          16,044 members, 94 posts, $16,570/release
+        {payments.length} Payments .   ₹{payments.reduce((a, b) => a + b.amount, 0)} raised
         </div>
 
         <div className="payment flex gap-3 w-[80%] mt-11">
@@ -180,7 +180,7 @@ const PaymentPage = ({ username }) => {
               <button
                 onClick={() => pay(Number.parseInt(paymentform.amount) * 100)}
                 className="disabled:bg-slate-600 disabled:from-purple-100 text-white bg-gradient-to-br from-[brown] to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2"
-              disabled={paymentform.name?.length < 3 || paymentform.message?.length < 4}
+              disabled={paymentform.name?.length < 3 || paymentform.message?.length < 4 || paymentform.amount<1}
               >
                 Pay
               </button>

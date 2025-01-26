@@ -7,15 +7,15 @@ const Login = () => {
   const { data: session } = useSession()
   const router = useRouter()
 
+  
   useEffect(() => {
     document.title = "Login - Get Me A Chai" 
     console.log(session)
-    
-  }, [])
-  if (session) {
-    router.push(`/dashboard`);
-  }
-
+    if(session){
+      router.push("/dashboard")
+    }
+  }, [session, router])
+  
   return (
     <div className='text-white py-14 container mx-auto'>
       <h1 className='text-center font-bold text-3xl'>Login to Get Started</h1>
@@ -157,4 +157,3 @@ const Login = () => {
 }
 
 export default Login
- 
